@@ -13,24 +13,7 @@ Designed specifically for custom robotics and industrial PCBs, this protocol rep
 *   **Cross-Platform:** Native support for ESP32, STM32, and Arduino (AVR) architectures.
 
 ---
-MaxlabsProtocol_Dev/
-├── platformio.ini                 <-- Multi-board build configuration
-├── src/
-│   └── main.cpp                   <-- Your bench test code (Aggressor / Defender)
-│
-└── lib/
-    └── MaxlabsProtocol/           <-- THIS FOLDER IS YOUR GITHUB REPO
-        ├── library.json           <-- PlatformIO package manifest
-        ├── library.properties     <-- Arduino IDE package manifest
-        ├── README.md              <-- GitHub documentation
-        ├── src/
-        │   ├── MaxlabsProtocol.h
-        │   └── MaxlabsProtocol.cpp
-        └── examples/
-            └── Basic_Slave/
-                └── Basic_Slave.ino
-
-                
+               
 ## 📦 Packet Architecture (The Envelope)
 
 Every transmission on the bus follows this strict, dynamically sized byte sequence:
