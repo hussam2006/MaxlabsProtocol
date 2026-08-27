@@ -1,35 +1,5 @@
 esphome:
   name: maxlabs-gateway
-  # Tells ESPHome to download your custom library directly from your repo
-  libraries:
-    - "https://github.com/hussam2006/MaxlabsProtocol.git#v0.9.0-beta"
-  includes:
-    - maxlabs_gateway.h
-
-esp32:
-  board: esp32-s3-devkitc-1
-  framework:
-    type: arduino
-###########################################
-#               Test Code 1
-###########################################
-# Create the sensor that will show up in your BMS GUI
-sensor:
-  - platform: custom
-    lambda: |-
-      auto gateway = new MaxlabsGateway();
-      App.register_component(gateway);
-      return {gateway->stm32_sensor};
-    sensors:
-      - name: "STM32 Register 10 Value"
-        accuracy_decimals: 0
-        icon: "mdi:memory"
-
-###########################################
-#               Test Code 2
-###########################################
-esphome:
-  name: maxlabs-gateway
   libraries:
     - "https://github.com/hussam2006/MaxlabsProtocol.git#v0.9.0-beta"
   includes:
