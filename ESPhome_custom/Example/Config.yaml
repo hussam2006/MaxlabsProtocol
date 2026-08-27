@@ -2,7 +2,7 @@ esphome:
   name: maxlabs-gateway
   # Tells ESPHome to download your custom library directly from your repo
   libraries:
-    - "https://github.com/your-username/MaxlabsProtocol.git#v0.9.0-beta"
+    - "https://github.com/hussam2006/MaxlabsProtocol.git#v0.9.0-beta"
   includes:
     - maxlabs_gateway.h
 
@@ -31,7 +31,7 @@ sensor:
 esphome:
   name: maxlabs-gateway
   libraries:
-    - "https://github.com/your-username/MaxlabsProtocol.git#v0.9.0-beta"
+    - "https://github.com/hussam2006/MaxlabsProtocol.git#v0.9.0-beta"
   includes:
     - maxlabs_gateway.h
 
