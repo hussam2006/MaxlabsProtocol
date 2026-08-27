@@ -1,0 +1,18 @@
+{
+  "name": "MaxlabsProtocol",
+  "version": "1.0.0",
+  "description": "Robust, non-blocking RS485 communication protocol with dynamic framing and CRC16 verification.",
+  "keywords": ["rs485", "protocol", "communication", "modbus-alternative", "crc16"],
+  "authors": [
+    {
+      "name": "Husam",
+      "maintainer": true
+    }
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/your-username/MaxlabsProtocol.git"
+  },
+  "frameworks": "arduino",
+  "platforms": ["espressif32", "ststm32", "atmelavr"]
+}

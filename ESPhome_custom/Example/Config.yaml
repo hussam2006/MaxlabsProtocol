@@ -1,0 +1,121 @@
+esphome:
+  name: maxlabs-gateway
+  # Tells ESPHome to download your custom library directly from your repo
+  libraries:
+    - "https://github.com/your-username/MaxlabsProtocol.git#v0.9.0-beta"
+  includes:
+    - maxlabs_gateway.h
+
+esp32:
+  board: esp32-s3-devkitc-1
+  framework:
+    type: arduino
+###########################################
+#               Test Code 1
+###########################################
+# Create the sensor that will show up in your BMS GUI
+sensor:
+  - platform: custom
+    lambda: |-
+      auto gateway = new MaxlabsGateway();
+      App.register_component(gateway);
+      return {gateway->stm32_sensor};
+    sensors:
+      - name: "STM32 Register 10 Value"
+        accuracy_decimals: 0
+        icon: "mdi:memory"
+
+###########################################
+#               Test Code 2
+###########################################
+esphome:
+  name: maxlabs-gateway
+  libraries:
+    - "https://github.com/your-username/MaxlabsProtocol.git#v0.9.0-beta"
+  includes:
+    - maxlabs_gateway.h
+
+esp32:
+  board: esp32-s3-devkitc-1
+  framework:
+    type: arduino
+
+# 1. Register our C++ Hub globally so the templates can talk to it
+custom_component:
+  - lambda: |-
+      maxlabs_hub = new MaxlabsGateway();
+      return {maxlabs_hub};
+
+# ====================================================
+# --- INPUTS (Data coming FROM STM32) ---
+# ====================================================
+sensor:
+  - platform: custom
+    lambda: 'return {maxlabs_hub->analog_input};'
+    sensors:
+      - name: "STM32 Water Level"
+        unit_of_measurement: "%"
+        accuracy_decimals: 0
+        icon: "mdi:water-percent"
+
+binary_sensor:
+  - platform: custom
+    lambda: 'return {maxlabs_hub->digital_input};'
+    binary_sensors:
+      - name: "STM32 Door Status"
+        icon: "mdi:door"
+
+
+# ====================================================
+# --- OUTPUTS (Commands going TO STM32) ---
+# ====================================================
+
+# Digital Output (Relay)
+switch:
+  - platform: template
+    name: "Main Water Valve"
+    id: valve_switch
+    icon: "mdi:pipe-valve"
+    turn_on_action:
+      - lambda: 'maxlabs_hub->set_relay(true);'
+      - switch.template.publish:
+          id: valve_switch
+          state: ON
+    turn_off_action:
+      - lambda: 'maxlabs_hub->set_relay(false);'
+      - switch.template.publish:
+          id: valve_switch
+          state: OFF
+
+# PWM / Analog Output
+number:
+  - platform: template
+    name: "Motor Speed limit"
+    id: motor_speed
+    icon: "mdi:engine"
+    min_value: 0
+    max_value: 100
+    step: 1
+    unit_of_measurement: "%"
+    set_action:
+      - lambda: 'maxlabs_hub->set_pwm(x);'
+      - number.template.publish:
+          id: motor_speed
+          state: !lambda 'return x;'
+
+# Instruction / State Selection
+select:
+  - platform: template
+    name: "Machine Routine"
+    id: machine_routine
+    icon: "mdi:washing-machine"
+    options:
+      - "Idle"
+      - "Wash"
+      - "Rinse"
+      - "Spin"
+    set_action:
+      - lambda: 'maxlabs_hub->set_mode(x);'
+      - select.template.publish:
+          id: machine_routine
+          state: !lambda 'return x;'
