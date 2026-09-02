@@ -8,7 +8,7 @@ init(autoreset=True)
 
 # Update these to match your actual laptop COM ports
 ESP32_PORT = 'COM3'  
-STM32_PORT = 'COM8'
+STM32_PORT = 'COM9'
 BAUD_RATE = 115200
 
 def read_port(port_name, color, prefix):
